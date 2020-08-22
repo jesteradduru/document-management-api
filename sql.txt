@@ -1,0 +1,3 @@
+ CREATE TABLE users(id serial primary key, username varchar(50) not null unique, type VARCHAR(50) not null default 'user');
+CREATE TABLE login (id serial primary key, username varchar(50) not null unique, hash TEXT not null);
+CREATE TABLE documents (id serial primary key, filename VARCHAR(50) not null, from_user VARCHAR(50) not null, to_user VARCHAR(50) not null, date_sent TIMESTAMP, date_received TIMESTAMP, status VARCHAR(50) not null, edited_by VARCHAR(50), remarks TEXT, file_path TEXT);

@@ -27,11 +27,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage }).single("document");
 
+const documents = require("./controllers/documents");
 const register = require("./controllers/register");
 const signin = require("./controllers/signin");
 const compose = require("./controllers/compose");
 const process = require("./controllers/process");
 const outgoing = require("./controllers/outgoing");
+const approval = require("./controllers/approval");
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -68,6 +70,7 @@ app.post("/processDoc", (req, res) => {
   process.handleProcessDocument(req, res, db);
 });
 
+// outgoing document
 app.post("/outgoing", (req, res) => {
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
@@ -80,6 +83,15 @@ app.post("/outgoing", (req, res) => {
     // Everything went fine.
     outgoing.handleOutgoing(req, res, db);
   });
+});
+// get all documents
+app.get("/documents", (req, res) => {
+  documents.handleGetDocuments(req, res, db);
+});
+
+// approval of documents
+app.post("/approval", (req, res) => {
+  approval.handleApproval(req, res, db);
 });
 
 app.listen(5000, () => {

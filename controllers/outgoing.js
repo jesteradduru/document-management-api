@@ -15,6 +15,8 @@ const handleOutgoing = (req, res, db) => {
             remarks: remarks,
             edited_by: edited_by,
           })
+          .returning("*")
+          .then((data) => res.status(200).json(data[0]))
           .catch((err) => res.status(400).json(err));
       });
 

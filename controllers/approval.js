@@ -1,11 +1,11 @@
-const handleProcessDocument = (req, res, db) => {
-  const { document_id } = req.body;
+const handleApproval = (req, res, db) => {
+  const { document_id, remarks, approval } = req.body;
 
   db("documents")
     .where({ id: document_id })
     .update({
-      date_received: new Date(),
-      status: "ONPROCESS",
+      checked: approval,
+      remarks: remarks,
     })
     .returning("*")
     .then((data) => res.status(200).json(data[0]))
@@ -13,5 +13,5 @@ const handleProcessDocument = (req, res, db) => {
 };
 
 module.exports = {
-  handleProcessDocument,
+  handleApproval,
 };
